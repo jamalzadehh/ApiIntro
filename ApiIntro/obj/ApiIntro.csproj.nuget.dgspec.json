@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro.csproj": {}
+    "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro\\ApiIntro.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro.csproj": {
+    "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro\\ApiIntro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro.csproj",
+        "projectUniqueName": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro\\ApiIntro.csproj",
         "projectName": "ApiIntro",
-        "projectPath": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro.csproj",
+        "projectPath": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro\\ApiIntro.csproj",
         "packagesPath": "C:\\Users\\Sebuhi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\obj\\",
+        "outputPath": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

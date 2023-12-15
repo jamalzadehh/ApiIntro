@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9EFWCy6+WPdrO2CpP8KyUocDIOeTcSxsrv/dxJ6Z4oGrpaFD7KGoi5PA25THHdwcd78vKkQLNpAH9rgi+ZFQpw==",
+  "dgSpecHash": "rYFijG6rRul7dS2Vq+SqNKnMYYyf38qqQwtgDvoTF8oglJV5q8GGFyEEGa4H4xoRIzyrRrZsazwI+JHGI82m0Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro.csproj",
+  "projectFilePath": "C:\\Users\\Sebuhi\\OneDrive\\İş masası\\ApiIntro\\ApiIntro\\ApiIntro.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sebuhi\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Sebuhi\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
