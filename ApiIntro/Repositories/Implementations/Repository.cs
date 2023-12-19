@@ -1,32 +1,49 @@
 ﻿
+using ApiIntro.Entities.Base;
+using ApiIntro.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ApiIntro.Repositories.Implementations
 {
-    public class Repository : IRepository
+    public class Repository<T> : IRepository<T> where T : BaseEntity, new()
     {
+        private readonly DbSet<T> _table;
         private readonly AppDbContext _context;
 
         public Repository(AppDbContext context)
         {
+            _table = context.Set<T>();
             _context = context;
         }
 
-        public async Task AddAsync(Category category)
+        public async Task AddAsync(T entity)
         {
-            await _context.Categories.AddAsync(category);
+            await _table.AddAsync(entity);
         }
 
-        public void Delete(Category category)
+        public void Delete(T entity)
         {
-            _context.Categories.Remove(category);
+            _table.Remove(entity);
         }
 
-        public async Task<IQueryable<Category>> GetAllAsync(Expression<Func<Category, bool>>? expression = null, params string[] includes)
+        public IQueryable<T> GetAllAsync(
+            Expression<Func<T, bool>>? expression = null,
+            Expression<Func<T, object>>? orderExpression = null,
+            bool isDescending = false,
+            int skip=0, int take = 0,
+            bool isTracking = true,
+            params string[] includes)
         {
-            var query = _context.Categories.AsQueryable();
+            var query = _table.AsQueryable();
             if (expression != null) { query = query.Where(expression); }
+            if (orderExpression != null)
+            {
+                if (isDescending) query = query.OrderByDescending(orderExpression);
+                else query = query.OrderBy(orderExpression);    
+            }
+            if (skip != 0) {  query = query.Skip(skip); }
+            if (take != 0) { query = query.Take(take); }
             if (includes != null)
             {
                 for (int i = 0; i < includes.Length; i++)
@@ -34,16 +51,16 @@ namespace ApiIntro.Repositories.Implementations
                     query = query.Include(includes[i]);
                 }
             }
-            return query;
+            return isTracking?query:query.AsNoTracking();
 
 
 
         }
 
-        public async Task<Category> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
-            return category;
+            T entity = await _table.FirstOrDefaultAsync(x => x.Id == id);
+            return entity;
         }
 
         public async Task SaveChangesAsync()
@@ -51,9 +68,9 @@ namespace ApiIntro.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public void Update(Category category)
+        public void Update(T entity)
         {
-            _context.Categories.Update(category);
+            _table.Update(entity);
         }
     }
 }

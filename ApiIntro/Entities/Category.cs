@@ -1,9 +1,9 @@
-﻿namespace ApiIntro.Entities
-{
-    public class Category
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
+﻿using ApiIntro.Entities.Base;
 
+namespace ApiIntro.Entities
+{
+    public class Category: BaseEntity
+    { 
+        public string Name { get; set; }
     }
 }

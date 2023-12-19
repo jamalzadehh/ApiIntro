@@ -1,5 +1,7 @@
 ﻿using ApiIntro.DAL;
+using ApiIntro.Dtos.Tag;
 using ApiIntro.Entities;
+using ApiIntro.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,43 +12,38 @@ namespace ApiIntro.Controllers
     [ApiController]
     public class TagsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        
+        private readonly ITagRepository _repository;
+        private readonly ITagService _service;
 
-        public TagsController(AppDbContext context)
+        public TagsController(ITagRepository repository,ITagService service)
         {
-            _context = context;
+            
+            _repository = repository;
+            _service = service;
         }
         [HttpGet]
         public async Task<IActionResult> Get(int page, int take)
-        {
-            List<Tag> tags = await _context.Tags.Skip((page - 1) * take).Take(take).ToListAsync();
-            return Ok(tags);
-
+        {            
+            return Ok(await _service.GetAllAsync(page,take));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            if (id <= 0) return BadRequest();
-            Tag tag = await _context.Tags.FirstOrDefaultAsync(x => x.Id == id);
-            if (tag == null) return NotFound();
-            return Ok(tag);
+            if (id <= 0) return BadRequest();   
+            return Ok(await _service.GetAsync(id));
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create([FromForm]CreateTagDto createTagDto)
         {
-            await _context.Tags.AddAsync(tag);
-            await _context.SaveChangesAsync();
-            return StatusCode(StatusCodes.Status201Created, tag);
+            await _service.CreateAsync(createTagDto);
+            return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, string name)
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateTagDto updateTagDto )
         {
             if (id <= 0) return BadRequest();
-
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(x => x.Id == id);
-            if (existed == null) return NotFound();
-            existed.Name = name;
-            await _context.SaveChangesAsync();
+            await _service.UpdateAsync(id, updateTagDto);
             return NoContent();
 
         }
@@ -54,10 +51,7 @@ namespace ApiIntro.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(x=>x.Id==id);
-            if (existed == null) return NotFound();
-            _context.Tags.Remove(existed);
-            await _context.SaveChangesAsync();
+            await _service.DeleteAsync(id);
             return NoContent();
         }
 
